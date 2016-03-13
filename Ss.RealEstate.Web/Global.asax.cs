@@ -21,7 +21,7 @@ namespace Ss.RealEstate.Web
             var exception = Server.GetLastError();
             if (exception == null) return;
 
-            SmtpMailer.SendMail("HomeROI@homeroi.us", new string[] { "avangari@gmail.com" }, "Exception on HomeROI", exception.StackTrace); 
+            SmtpMailer.SendMail("HomeScorer@HomeScorer.us", new string[] { "avangari@gmail.com" }, "Exception on HomeScorer", exception.StackTrace); 
 
             // Clear the error
             Server.ClearError();
