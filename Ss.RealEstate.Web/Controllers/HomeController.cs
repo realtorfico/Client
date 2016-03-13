@@ -4,6 +4,7 @@ using Ss.RealEstate.Model;
 using System.Collections.Generic;
 using System.Linq;
 using Ss.RealEstate.Web.Models;
+using System.Configuration;
 
 namespace Ss.RealEstate.Web.Controllers
 {
@@ -29,15 +30,20 @@ namespace Ss.RealEstate.Web.Controllers
             if (!ModelState.IsValid) return View(); 
 
             var basicScorer = new BasicScorer();
-            bool isPaginated = false; 
-            var addressList = CrawlerForProperty.GetAddresses(homeVM.City, homeVM.MinPrice, homeVM.MaxPrice, homeVM.MinYear, homeVM.MaxYear, out isPaginated);
+            bool isPaginated = false;
+            bool usePropertyIdForUrl = (ConfigurationManager.AppSettings["UseJsonForGettingAddresses"].ToLower() == "true");
+
+            var addressList = (usePropertyIdForUrl) ?
+                CrawlerForProperty.GetAddressList(homeVM.City, homeVM.MinPrice, homeVM.MaxPrice, homeVM.MinYear, homeVM.MaxYear, out isPaginated) :
+                CrawlerForProperty.GetAddresses(homeVM.City, homeVM.MinPrice, homeVM.MaxPrice, homeVM.MinYear, homeVM.MaxYear, out isPaginated); 
+
             var propInfoList = new List<PropertyInfo>();
             var propInfoZeroScoreList = new List<PropertyInfo>();
             var combinedList = new List<IOrderedEnumerable<PropertyInfo>>(); 
 
             foreach (var address in addressList)
             {
-                var propInfo = basicScorer.GetBasicScore(address); 
+                var propInfo = basicScorer.GetBasicScore(address, usePropertyIdForUrl); 
                 if (propInfo.DesirabilityScore > 0) propInfoList.Add(propInfo); else propInfoZeroScoreList.Add(propInfo); 
             }
             combinedList.Add(propInfoList.OrderByDescending(a => a.DesirabilityScore));
