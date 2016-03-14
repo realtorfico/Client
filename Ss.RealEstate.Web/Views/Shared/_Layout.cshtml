@@ -33,10 +33,10 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - HomeScorer Application</p>
-            <p><b>Legend:</b> (TH: TownHouse, SF: Single Family, C: Condo, FSBO: For Sale By Owner, NA: Not Available)</p>
-        </footer>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">&copy; @DateTime.Now.Year - HomeScorer Application - All rights reserved</div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

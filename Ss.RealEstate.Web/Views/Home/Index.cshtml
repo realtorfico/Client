@@ -6,87 +6,108 @@
 }
 
 <div class="j ">
-    <p class="lead">Your best return-on-investments - (on buying real-estate properties).</p>
+    <p class="lead">Your best ROI - on buying real-estate properties.</p>
+    <p class="lead">With all needed information - at your finger tips.</p>
 </div>
 
 
 @using (Html.BeginForm())
 {
-    <p>Please enter a city (within California) followed by your criteria below, to get a list of properties for sale, in descending order of desirability</p>
-    <div class="container">
         <div id="loading"><div id="loadingcontent"><p id="loadingspinner"><img src="~/Images/ajax-loader.gif" /></p></div></div>
-        <div class="row">
-            <div class="col-sm-4">
-                <h5><b>City / ZipCode (in CA):</b></h5>
-                <div>@Html.TextBoxFor(m => m.City, "Irvine", new { style = "width:130px" })</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Please enter a city (within California) followed by your criteria below, to get a list of properties for sale.
             </div>
-            <div class="col-sm-2">
-                <h5><b>Min Year Built:</b></h5>
-                <div class="editor-field">@Html.TextBoxFor(m => m.MinYear, "1980", new { style = "width:50px" })</div>
-            </div>
-            <div class="col-sm-2">
-                <h5><b>Max Year Built:</b></h5>
-                <div>@Html.TextBoxFor(m => m.MaxYear, "2016", new { style = "width:50px" })</div>
-            </div>
-            <div class="col-sm-2">
-                <h5><b>Min Price:</b></h5>
-                <div class="editor-field">@Html.TextBoxFor(m => m.MinPrice, "50000", new { style = "width:50px" })</div>
-            </div>
-            <div class="col-sm-2">
-                <h5><b>Max Price:</b></h5>
-                <div class="editor-field">@Html.TextBoxFor(m => m.MaxPrice, "375000", new { style = "width:70px" })</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h5><b>City / ZipCode (in CA):</b></h5>
+                        <div>@Html.TextBoxFor(m => m.City, "Irvine", new { style = "width:130px" })</div>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5><b>Min Year Built:</b></h5>
+                        <div class="editor-field">@Html.TextBoxFor(m => m.MinYear, "1980", new { style = "width:50px" })</div>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5><b>Max Year Built:</b></h5>
+                        <div>@Html.TextBoxFor(m => m.MaxYear, "2016", new { style = "width:50px" })</div>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5><b>Min Price:</b></h5>
+                        <div class="editor-field">@Html.TextBoxFor(m => m.MinPrice, "50000", new { style = "width:75px" })</div>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5><b>Max Price:</b></h5>
+                        <div class="editor-field">@Html.TextBoxFor(m => m.MaxPrice, "375000", new { style = "width:75px" })</div>
+                    </div>
+                </div>
+                <p></p>
+                <div><input id="submitbtn" class="btn btn-primary" type="submit" value="Search" formaction='@Url.Action("Index", Model)' /></div>
             </div>
         </div>
-        <p></p>
-        <div><input id="submitbtn" class="btn btn-primary btn-success" type="submit" value="Search" formaction='@Url.Action("Index", Model)' /></div>
-    </div>
 }
 <p></p>
 
 @if (ViewBag.Collection.Count > 0)
 {
-    <div class="col-sm-12">
-        Properties displayed in <b>descending order of desirability</b>. Desirability Scores on these properties are calculated based on home facts (available to us) that are deemed reliable but not guaranteed.
-        Use the score for reference purpose only and do your own due deligence in checking all details.
-        @if ((bool)ViewData["isPaginated"] == true)
-            {<p>Returned results are more than those displayed. Please refine your criteria to get a smaller result set.</p> }
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Properties displayed in <b>descending order of desirability</b>. <br/>
+            </div>
+            <div class="panel-body">
+                Desirability Scores on these properties are calculated based on home facts (available to us) that are deemed reliable but not guaranteed.
+                Use the score for reference purpose only and do your own due deligence in checking all details.
+                @if ((bool)ViewData["isPaginated"] == true)
+                {<p>Returned results are more than those displayed. Please refine your criteria to get a smaller result set.</p> }
 
-        @DisplayData(true);
-    </div>
+                @DisplayData(true)
+            </div>
+        </div>
 
-    <div class="col-sm-12">
-        Could not calculate score for the following properties due to non-availability of some facts. However, please feel free to look at the details.
-        @DisplayData(false);
-    </div>
-
-    <div>
-        @{
-            <p>
-                Price Per Sq Ft for different zip codes to the city you selected:
-                @foreach (var item in (Dictionary<string, double>)ViewData["ZipPps"])
-                {
-                    @Html.Raw(string.Format("({0:N0} : <b>{1:C2}</b>)   ", item.Key, item.Value));
-                }
-            </p>
-        }
-    </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                    Could not calculate score for the following properties due to non-availability of some facts. However, please feel free to look at the details.
+            </div>    
+            <div class="panel-body">
+                @DisplayData(false)
+            </div>
+        </div>
+        <div>
+            @{
+                <p>
+                    Price Per Sq Ft for zip codes belonging to the city you selected:
+                    @foreach (var item in (Dictionary<string, double>)ViewData["ZipPps"])
+                    {
+                        @Html.Raw(string.Format("({0:N0} : <b>{1:C2}</b>)   ", item.Key, item.Value))
+                    }
+                </p>
+            }
+        </div>
+        <ul class="nav navbar-nav">
+            <li><b>Legend:</b> (TH: TownHouse, SF: Single Family, C: Condo, FSBO: For Sale By Owner, NA: Not Available)</li>
+        </ul>
 }
 
 @helper DisplaySchoolInfo(uint value)
 {
-    if ((value > 0 && value < 4)) { <div class="RedCircle" style="float: left; width: 25px;">@value</div> }
-    else if (value > 3 && value < 8) { <div class="BlueCircle" style="float: left; width: 25px;">@value</div> }
-    else if (value > 7) { <div class="GreenCircle" style="float: left; width: 25px;">@value</div> }
+    if ((value > 0 && value < 4))
+    { <div class="RedCircle" style="float: left; width: 25px;">@value</div> }
+    else if (value > 3 && value < 8)
+    { <div class="BlueCircle" style="float: left; width: 25px;">@value</div> }
+    else if (value > 7)
+    { <div class="GreenCircle" style="float: left; width: 25px;">@value</div> }
 }
 
 @helper DisplayData(bool isScoreNeeded)
 {
-    <table class="table table-striped table-condensed">
-        <thead>
-            <tr style="background-color: #4CAF50; color: white;">
+    <table class="table table-striped table-condensed table-responsive table-hover table-bordere">
+        <thead class="thead-inverse">
+            <tr>
                 <th>Property Address</th>
-                @if (isScoreNeeded) { <th>Score</th> }
-                <th>Price</th> 
+                @if (isScoreNeeded)
+                {
+                    <th>Score</th> }
+                <th>Price</th>
                 <th>Type</th>
                 <th>Sale ?</th>
                 <th>HOA</th>
@@ -104,7 +125,9 @@
             {
                 <tr>
                     <td>@Html.Raw(@item.Address.FullAddress)</td>
-                    @if (isScoreNeeded) { <td><b>@Html.Raw(item.DesirabilityScore)</b></td> }
+                    @if (isScoreNeeded)
+                    {
+                        <td><b>@Html.Raw(item.DesirabilityScore)</b></td> }
                     <td>@Html.Raw(string.Format("{0:C0}", item.ListedPrice))</td>
                     <td>@Html.Raw(item.HomeType)</td>
                     <td>@Html.Raw(item.SaleType)</td>
@@ -128,30 +151,6 @@
         </tbody>
     </table>
 }
-
-<script language="javascript">
-    $ready($('#submitbtn').click(sendAJAX))
-
-    function sendAJAX() {
-        var formData = new FormData(); 
-        formData.append('City', "Cerritos");
-        formData.append('minYear', "1980");
-        formData.append('maxYear', "2016");
-        formData.append('minPrice', "50000");
-        formData.append('maxPrice', "375000");
-
-        $.ajax({
-            type: "POST",
-            url: "home/index",
-            dataType: "json",
-            data: formData,
-            success: function (respJSON) {
-                var X = respJSON.X;
-                var Y = respJSON.Y;
-            }
-        })
-    };
-</script>
 
 <style type="text/css">
     #loading {
@@ -215,4 +214,4 @@
         text-align: center;
         background: #4CAF50;
     }
-</style> 
+</style>
