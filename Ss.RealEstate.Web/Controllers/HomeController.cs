@@ -8,7 +8,7 @@ using System.Configuration;
 
 namespace Ss.RealEstate.Web.Controllers
 {
-    [HandleError]
+    //[HandleError]
     public class HomeController : Controller
     {
         [HttpGet]
@@ -55,20 +55,6 @@ namespace Ss.RealEstate.Web.Controllers
             ViewData["isPaginated"] = isPaginated;
 
             return View("Index");
-        }
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            filterContext.ExceptionHandled = true;
-
-            // Redirect on error:
-            filterContext.Result = RedirectToAction("Index", "Error");
-
-            // OR set the result without redirection:
-            filterContext.Result = new ViewResult
-            {
-                ViewName = "~/Views/Error/Index.cshtml"
-            };
         }
 
         public ActionResult About()

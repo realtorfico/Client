@@ -21,13 +21,13 @@ namespace Ss.RealEstate.Web
             var exception = Server.GetLastError();
             if (exception == null) return;
 
-            SmtpMailer.SendMail("HomeScorer@HomeScorer.us", new string[] { "avangari@gmail.com" }, "Exception on HomeScorer", exception.StackTrace); 
+            SmtpMailer.SendMail("HomeScorer@HomeScorer.us", new string[] { "avangari@gmail.com" }, "Exception on HomeScorer", exception.StackTrace);
 
             // Clear the error
             Server.ClearError();
 
             // Redirect to a landing page
-            Response.Redirect("~/views/Error/Index");
+            //Response.Redirect("~/views/Error/Index");  //This may not be required because web.config is already set to point to this
         }
     }
 }
