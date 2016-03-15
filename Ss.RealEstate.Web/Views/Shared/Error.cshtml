@@ -4,6 +4,27 @@
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<p></p>
+<div class="panel panel-primary">
+    <div class="panel-heading">Oouch!!! My bad!!!</div>
+    <div class="panel-body">
+        An error has occurred. Please contact us at <a href="mailto:realtorfico@gmail.com">support@homescorer.com</a>
+    </div>
+</div>
+
+<p></p>
+<div class="panel panel-primary">
+    <div class="panel-heading">Some reasons you could land here:</div>
+    <div class="panel-body">
+        <ul>
+            <li>Input Values on 'City or Zip Code' textbox may not be in proper form (Please input a valid city in CA or 5 digits for Zip Code).</li>
+            <li>Values on 'Min Year Built' or 'Max Year Built' textboxes are not in proper form. Please input them as integers.</li>
+            <li>Values on 'Min Price' or 'Max Price' textboxes are not in proper form. Please input them as integers.</li>
+            <li>Value against 'Min Year Built' should be less than the value against 'Max Year Built'.</li>
+            <li>Value against 'Min Price' should be less than the value against 'Max Price'.</li>
+            <li>Value against 'Max Year Built' should not be greater than the current year</li>
+            <li>Value against 'Min Year Built' should not be less than 1910</li>
+        </ul>
+    </div>
+</div>
 

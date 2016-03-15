@@ -50,42 +50,42 @@
 
 @if (ViewBag.Collection.Count > 0)
 {
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                Properties displayed in <b>descending order of desirability</b>. <br/>
-            </div>
-            <div class="panel-body">
-                Desirability Scores on these properties are calculated based on home facts (available to us) that are deemed reliable but not guaranteed.
-                Use the score for reference purpose only and do your own due deligence in checking all details.
-                @if ((bool)ViewData["isPaginated"] == true)
-                {<p>Returned results are more than those displayed. Please refine your criteria to get a smaller result set.</p> }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Properties displayed in <b>descending order of desirability</b>. <br/>
+        </div>
+        <div class="panel-body">
+            Desirability Scores on these properties are calculated based on home facts (available to us) that are deemed reliable but not guaranteed.
+            Use the score for reference purpose only and do your own due deligence in checking all details.
+            @if ((bool)ViewData["isPaginated"] == true)
+            {<p>Returned results are more than those displayed. Please refine your criteria to get a smaller result set.</p> }
 
-                @DisplayData(true)
-            </div>
+            @DisplayData(true)
         </div>
+    </div>
 
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                    Could not calculate score for the following properties due to non-availability of some facts. However, please feel free to look at the details.
-            </div>    
-            <div class="panel-body">
-                @DisplayData(false)
-            </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            We did what we could! But the information we have on these properties, did not satisfy our Score Managers. However, please feel free to look at the details.
+        </div>    
+        <div class="panel-body">
+            @DisplayData(false)
         </div>
-        <div>
-            @{
-                <p>
-                    Price Per Sq Ft for zip codes belonging to the city you selected:
-                    @foreach (var item in (Dictionary<string, double>)ViewData["ZipPps"])
-                    {
-                        @Html.Raw(string.Format("({0:N0} : <b>{1:C2}</b>)   ", item.Key, item.Value))
-                    }
-                </p>
-            }
-        </div>
-        <ul class="nav navbar-nav">
-            <li><b>Legend:</b> (TH: TownHouse, SF: Single Family, C: Condo, FSBO: For Sale By Owner, NA: Not Available)</li>
-        </ul>
+    </div>
+    <div>
+        @{
+            <p>
+                Price Per Sq Ft for zip codes belonging to the city you selected:
+                @foreach (var item in (Dictionary<string, double>)ViewData["ZipPps"])
+                {
+                    @Html.Raw(string.Format("({0:N0} : <b>{1:C2}</b>)   ", item.Key, item.Value))
+                }
+            </p>
+        }
+    </div>
+    <ul class="nav navbar-nav">
+        <li><b>Legend:</b> (TH: TownHouse, SF: Single Family, C: Condo, FSBO: For Sale By Owner, NA: Not Available)</li>
+    </ul>
 }
 
 @helper DisplaySchoolInfo(uint value)
